@@ -42,7 +42,7 @@ public OnPluginStart()
 {
 	convar_nt_dm_version = CreateConVar("sm_nt_dm_version", PLUGIN_VERSION, "NEOTOKYO° Deathmatch.", FCVAR_PLUGIN | FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DONTRECORD);
 	convar_nt_dm_enabled = CreateConVar("sm_nt_dm_enabled", "1", "Enables or Disables deathmatch.", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	convar_nt_dm_timelimit = CreateConVar("sm_nt_dm_timelimit", "20", "Sets deathmatch timilimit.", FCVAR_PLUGIN, true, 0.0, true, 60.0);
+	convar_nt_dm_timelimit = CreateConVar("sm_nt_dm_timelimit", "20", "Sets deathmatch timelimit.", FCVAR_PLUGIN, true, 0.0, true, 60.0);
 	convar_nt_dm_spawnprotect = CreateConVar("sm_nt_dm_spawnprotect", "5.0", "Length of time to protect spawned players", FCVAR_PLUGIN, true, 0.0, true, 30.0);
 	AutoExecConfig(true);
 
