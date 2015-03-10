@@ -25,7 +25,7 @@ public Plugin:myinfo =
     author = "Agiel",
     description = "Neotokyo team deathmatch",
     version = PLUGIN_VERSION,
-    url = ""
+    url = "https://github.com/Agiel/nt-deathmatch"
 };
 
 new Handle:convar_nt_dm_version = INVALID_HANDLE;
