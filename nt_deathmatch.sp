@@ -135,8 +135,11 @@ public Action:timer_PlayerProtect(Handle:timer, any:client)
 {
 	//Disable protection on the Client
 	clientProtected[client] = false;
-
-	PrintToChat(client, "[nt-dm] Your spawn protection is now disabled");
+	
+	if(IsClientConnected(client) && IsClientInGame(client))
+	{
+		PrintToChat(client, "[nt-dm] Your spawn protection is now disabled");
+	}
 }
 
 // Restore players health if they take damage while protected
