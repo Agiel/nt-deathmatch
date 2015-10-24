@@ -51,7 +51,6 @@ public OnPluginStart()
 	HookEvent("player_spawn", OnPlayerSpawn);
 	HookEvent("player_hurt", OnPlayerHurt);
 	HookEvent("player_death", OnPlayerDeath);
-	StartDeathmatch();
 }
 
 public OnConfigsExecuted()
