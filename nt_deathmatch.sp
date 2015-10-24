@@ -1,6 +1,6 @@
 /**************************************************************
 --------------------------------------------------------------
- NEOTOKYO° Deathmatch
+ NEOTOKYOï½° Deathmatch
 
  Plugin licensed under the GPLv3
  
@@ -21,7 +21,7 @@ Changelog
 
 public Plugin:myinfo =
 {
-    name = "NEOTOKYO° Deathmatch",
+    name = "NEOTOKYOï½° Deathmatch",
     author = "Agiel",
     description = "Neotokyo team deathmatch",
     version = PLUGIN_VERSION,
@@ -40,7 +40,7 @@ new clientHP[MAXPLAYERS+1];
 
 public OnPluginStart()
 {
-	convar_nt_dm_version = CreateConVar("sm_nt_dm_version", PLUGIN_VERSION, "NEOTOKYO° Deathmatch.", FCVAR_PLUGIN | FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DONTRECORD);
+	//convar_nt_dm_version = CreateConVar("sm_nt_dm_version", PLUGIN_VERSION, "NEOTOKYOï½° Deathmatch.", FCVAR_PLUGIN | FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DONTRECORD);
 	convar_nt_dm_enabled = CreateConVar("sm_nt_dm_enabled", "1", "Enables or Disables deathmatch.", FCVAR_PLUGIN, true, 0.0, true, 1.0);
 	convar_nt_dm_timelimit = CreateConVar("sm_nt_dm_timelimit", "20", "Sets deathmatch timelimit.", FCVAR_PLUGIN, true, 0.0, true, 60.0);
 	convar_nt_dm_spawnprotect = CreateConVar("sm_nt_dm_spawnprotect", "5.0", "Length of time to protect spawned players", FCVAR_PLUGIN, true, 0.0, true, 30.0);
@@ -51,6 +51,7 @@ public OnPluginStart()
 	HookEvent("player_spawn", OnPlayerSpawn);
 	HookEvent("player_hurt", OnPlayerHurt);
 	HookEvent("player_death", OnPlayerDeath);
+	StartDeathmatch();
 }
 
 public OnConfigsExecuted()
@@ -67,10 +68,23 @@ public StartDeathmatch()
 {
 	new timeLimit = GetConVarInt(convar_nt_dm_timelimit);
 	new Handle:hTimeLimit = FindConVar("mp_timelimit");
+	new gamerulesentity;
+	new gamestateoffset;
+	new index = -1;
+	
+	//GameRules_SetProp("m_iGameState", 1);    //GameRules lookup fails with this
+	index = FindEntityByClassname(index, "neo_gamerules");  // this should be the gamerules proxy
 
-	//GameRules_SetProp("m_iGameState", 1);
+	SetEntData(index, GetEntSendPropOffs(index, "m_iGameType"), 1);
+	SetEntData(index, GetEntSendPropOffs(index, "m_iGameState"), 1);  
+	gamerulesentity = GetEntSendPropOffs(index, "m_iGameType");
+	gamestateoffset = GetEntSendPropOffs(index, "m_iGameState");
+	
+	//PrintToServer("index %i offset %i m_iGameState %i", index, gamerulesentity, gamestateoffset);
+	//PrintToChatAll("index %i offset %i m_iGameState %i", index, gamerulesentity, gamestateoffset);
+	
 	SetConVarInt(hTimeLimit, timeLimit);
-	GameRules_SetPropFloat("m_fRoundTimeLeft", timeLimit * 60.0);
+	GameRules_SetPropFloat("m_fRoundTimeLeft", timeLimit * 60.0);  //no error for this weirdly enough.
 }
 
 public OnTimeLimitChanged(Handle:cvar, const String:oldVal[], const String:newVal[])
@@ -139,6 +153,7 @@ public Action:timer_PlayerProtect(Handle:timer, any:client)
 	if(IsClientConnected(client) && IsClientInGame(client))
 	{
 		PrintToChat(client, "[nt-dm] Your spawn protection is now disabled");
+		EmitSoundToClient(client, "saitama_corp_i.mp3", SOUND_FROM_PLAYER, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_NOFLAGS, SNDVOL_NORMAL, SNDPITCH_NORMAL, -1, NULL_VECTOR, NULL_VECTOR, true, 0.0);
 	}
 }
 
