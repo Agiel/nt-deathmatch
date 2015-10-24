@@ -67,8 +67,8 @@ public StartDeathmatch()
 {
 	new timeLimit = GetConVarInt(convar_nt_dm_timelimit);
 	new Handle:hTimeLimit = FindConVar("mp_timelimit");
-	new gamerulesentity;
-	new gamestateoffset;
+	//new gamerulesentity;
+	//new gamestateoffset;
 	new index = -1;
 	
 	//GameRules_SetProp("m_iGameState", 1);    //GameRules lookup fails with this
@@ -76,8 +76,8 @@ public StartDeathmatch()
 
 	SetEntData(index, GetEntSendPropOffs(index, "m_iGameType"), 1);
 	SetEntData(index, GetEntSendPropOffs(index, "m_iGameState"), 1);  
-	gamerulesentity = GetEntSendPropOffs(index, "m_iGameType");
-	gamestateoffset = GetEntSendPropOffs(index, "m_iGameState");
+	//gamerulesentity = GetEntSendPropOffs(index, "m_iGameType");
+	//gamestateoffset = GetEntSendPropOffs(index, "m_iGameState");
 	
 	//PrintToServer("index %i offset %i m_iGameState %i", index, gamerulesentity, gamestateoffset);
 	//PrintToChatAll("index %i offset %i m_iGameState %i", index, gamerulesentity, gamestateoffset);
